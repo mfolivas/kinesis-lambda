@@ -9,7 +9,18 @@ import java.io.IOException;
  */
 public class ProcessKinesisEvents {
     public static void recordHandler(KinesisEvent event) throws IOException {
-        event.getRecords().stream().forEach(rec -> System.out.println(new String(rec.getKinesis().getData().array())));
+        
+        event.getRecords()
+        .stream()
+        .forEach(rec -> {
+            System.out.format("Event [%s-%s](vesion %s) from :%s: stored-data >%s<\n"
+                    , rec.getEventID()
+                    , rec.getEventName()
+                    , rec.getEventVersion()
+                    , rec.getEventSource()
+                    , new String(rec.getKinesis().getData().array())
+                    );
+            });
     }
 }
 
